@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // {
+    //   "name": "Attach to Process",
+    //   "type": "go",
+    //   "request": "attach",
+    //   "mode": "local",
+    //   "processId": 0,
+    // }, // TODO: fix after m2 darwin binary debug symbols will be resolved
+    {
+      "name": "Connect to server",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/node_modules/serverless/bin/serverless",
+      "args": ["offline", "start", "--param", "runtime=go1.x"],
+      "runtimeExecutable": "node",
+      "sourceMaps": true,
+      "runtimeArgs": ["--inspect", "--lazy"],
+      "windows": {
+        "program": "${workspaceRoot}\\node_modules\\serverless\\bin\\serverless"
+      },
+      "osx": {
+        "program": "${workspaceRoot}/node_modules/serverless/bin/serverless"
+      },
+      // "preLaunchTask": "run-serverless-offline",
+      // "postDebugTask": "run-serverless-offline"
+      // "attachSimplePort": 3000
+    }
+  ]
+}

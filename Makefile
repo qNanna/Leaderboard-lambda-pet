@@ -1,3 +1,4 @@
+# -ldflags="-s -w" (stripped -25% binary without debug) # -gcflags "all=-N -l" (debug, but m2 still have error)
 # build:
 # 	GOOS=linux GOARCH=arm64 go build -ldflags="-s -w"
 
@@ -14,13 +15,13 @@ build:
 	serverless go build
 
 deploy:
-	serverless deploy --force
+	node node_modules/serverless/bin/serverless deploy --force
 
 remove:
-	serverless remove
+	node node_modules/serverless/bin/serverless remove
 
 run:
-	serverless offline --param='runtime=go1.x'
+	node node_modules/serverless/bin/serverless offline --param='runtime=go1.x'
 
 test:
-	serverless invoke -f health 
+	node node_modules/serverless/bin/serverless invoke -f health 

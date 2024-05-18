@@ -10,11 +10,17 @@ provider:
   runtime: ${param:runtime, 'provided.al2'} 
   deploymentMethod: direct
   region: eu-central-1
+  environment: 
+    AWS_SDK_LOAD_CONFIG: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action: ssm:GetParameter
+      Resource: "*"
 
 package:
   individually: true
   exclude:
-    - ./**
+    - ./src/**
   include:
     - ./.bin/**
 
@@ -31,21 +37,21 @@ custom:
 
 functions:
   health:
-    handler: ./functions/health/main.go
+    handler: ./src/functions/health/main.go
     timeout: 30
     events:
       - http:
           path: /health
           method: get
   scores:
-    handler: ./functions/get-scores/main.go
+    handler: ./src/functions/get-scores/main.go
     timeout: 30
     events:
       - http:
           path: /scores
           method: get
   scores-add:
-    handler: ./functions/add-score/main.go
+    handler: ./src/functions/add-score/main.go
     timeout: 30
     events:
       - http:

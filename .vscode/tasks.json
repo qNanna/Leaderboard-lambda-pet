@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "run-serverless-offline",
+      "type": "shell",
+      "command": "make run",
+      "isBackground": true,
+    }
+  ]
+}
