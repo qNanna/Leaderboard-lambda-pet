@@ -1,0 +1,53 @@
+service: slanj-api
+
+frameworkVersion: '3'
+configValidationMode: error
+
+provider:
+  name: aws
+  stage: dev
+  architecture: arm64
+  runtime: ${param:runtime, 'provided.al2'} 
+  deploymentMethod: direct
+  region: eu-central-1
+
+package:
+  individually: true
+  exclude:
+    - ./**
+  include:
+    - ./.bin/**
+
+plugins:
+  - serverless-offline
+  - serverless-go-plugin
+
+custom:
+  go:
+    supportedRuntimes: ["provided.al2"]
+    buildProvidedRuntimeAsBootstrap: true
+    monorepo: true
+    cmd: GOOS=linux GOARCH=arm64 go build -ldflags="-s -w"
+
+functions:
+  health:
+    handler: ./functions/health/main.go
+    timeout: 30
+    events:
+      - http:
+          path: /health
+          method: get
+  scores:
+    handler: ./functions/get-scores/main.go
+    timeout: 30
+    events:
+      - http:
+          path: /scores
+          method: get
+  scores-add:
+    handler: ./functions/add-score/main.go
+    timeout: 30
+    events:
+      - http:
+          path: /scores
+          method: post

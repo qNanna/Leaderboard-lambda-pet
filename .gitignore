@@ -1,0 +1,8 @@
+.node_modules
+
+.serverless
+.serverless-offline
+
+.bin
+
+.DS_Store
